@@ -1,8 +1,14 @@
-/* ./src/index.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-html{
-  font-size: 14px;
+/*------ global styles -----------*/
+html {
+  font-size: 16px;
 }
+
+.page-title {
+  font-size: 3rem;
+}
+
+.section-title {
+  font-size: 2rem;
+}
+
+@import url("./styles/tab.css");

@@ -16,9 +16,8 @@ export default function Home() {
   };
 
   return (
-    <Paper id="main-tab">
+    <Paper className="shadow-none border-b-2">
       <Tabs
-        
         aria-label="main tabs"
         value={value}
         onChange={handleChange}
@@ -27,21 +26,19 @@ export default function Home() {
         centered
       >
         <Tab
-          className="title-tab"
           label={
-            <>
-              <FindReplace color="primary" />
-              <h1>
-                <span>{t("main.title_p1")}</span>
-                <span>{t("main.title_p2")}</span>
+            <label className="flex items-center">
+              <FindReplace color="primary" className="mr-1"/>
+              <h1 className="text-lg">
+                <span className="capitalize inline-block">{t("main.title_p1")}</span>
+                <span className="capitalize inline-block font-semibold">{t("main.title_p2")}</span>
               </h1>
-            </>
+            </label>
           }
-          disabled
+          className="pointer-events-none"
         />
-        <Tab label="Item One" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
+        <Tab label={t("home.currency_converter")} />
+        <Tab label={t("home.view_conversion_history")} />
       </Tabs>
     </Paper>
   );

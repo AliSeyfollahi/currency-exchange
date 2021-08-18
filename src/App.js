@@ -4,11 +4,21 @@ import Home from "./pages/Home/Home";
 
 import "./locale/index.js";
 
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { teal } from "@material-ui/core/colors";
+const theme = createTheme({
+  palette: {
+    primary: teal,
+  },
+});
+
 function App() {
   return (
-    <Container className="App">
-      <Home />
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container className="App pt-4">
+        <Home />
+      </Container>
+    </ThemeProvider>
   );
 }
 
