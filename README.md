@@ -1,4 +1,5 @@
-# Getting Started with Create React App
+# currency-exchange
+This is a currency conversion application to help calculate what the amount is worth in another currency.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
