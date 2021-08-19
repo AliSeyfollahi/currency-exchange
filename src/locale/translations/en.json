@@ -1,10 +1,17 @@
 {
   "main": {
-    "title_p1":"currency",
-    "title_p2":"exchange"
+    "title_p1": "currency",
+    "title_p2": "exchange"
   },
   "home": {
     "currency_converter": "currency converter",
     "view_conversion_history": "view conversion history"
+  },
+  "currency_converter": {
+    "i_want_convert": "I want to convert",
+    "from": "from",
+    "to": "to",
+    "convert": "convert",
+    "amount": "amount"
   }
 }

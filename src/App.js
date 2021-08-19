@@ -1,4 +1,3 @@
-import { Container } from "@material-ui/core";
 import "./App.css";
 import Home from "./pages/Home/Home";
 
@@ -15,9 +14,9 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Container className="App pt-4">
+      <div className="App pt-4">
         <Home />
-      </Container>
+      </div>
     </ThemeProvider>
   );
 }

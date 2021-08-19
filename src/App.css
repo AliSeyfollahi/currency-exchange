@@ -5,10 +5,18 @@ html {
 
 .page-title {
   font-size: 3rem;
+  font-weight: 500;
+  margin: .75rem 0 2.5rem;
 }
 
 .section-title {
   font-size: 2rem;
 }
 
+.accent{
+  color: var(--accent-color);
+}
+
 @import url("./styles/tab.css");
+@import url("./styles/form.css");
+@import url("./styles/color.css");
