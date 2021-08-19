@@ -1,65 +1,66 @@
 import { Button, Grid, TextField } from "@material-ui/core";
-import { createContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getExchangeRates } from "../../api/nomics";
 import CurrenciesList from "./CurrenciesList";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import ExchangeRateResult from "./ExchangeRateResult";
-
-export const CurrencyFormContext = createContext();
+import { CurrencyFormContext } from "../../context/CurrencyFormContext";
 
 export default function CurrencyConverterForm() {
   const { t } = useTranslation();
-  const [exchangeRates, setExchangeRates] = useState([]);
-  const [exchangesLoading, setExchangesLoading] = useState(true);
-  const [doConvert, setDoConvert] = useState(false);
-  const [formValues, setFormValues] = useState({
-    amount: 500,
-  });
+  const [formValues, setFormValues] = useState({});
 
-  useEffect(() => {
-    getExchangeRates().then((data) => {
-      setExchangeRates(data);
-      setExchangesLoading(false);
-    });
-  }, []);
-
-  useEffect(() => {
-    setDoConvert(false);
-  }, [formValues]);
+  const { exchangeRateValues, setExchangeRateValues } =
+    useContext(CurrencyFormContext);
 
   const handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setFormValues({ ...formValues, ...{ [name]: value } });
+    setExchangeRateValues({
+      ...exchangeRateValues,
+      ...{ amount: null, from: null, to: null },
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDoConvert(true);
+    setExchangeRateValues({
+      ...exchangeRateValues,
+      ...formValues,
+    });
   };
 
   const handleSwitch = (e) => {
     e.preventDefault();
-    setFormValues({
+    let values = {
       ...formValues,
       ...{ to: formValues.from, from: formValues.to },
+    };
+
+    setFormValues(values);
+    setExchangeRateValues({
+      ...exchangeRateValues,
+      ...values,
     });
   };
 
   return (
-    <CurrencyFormContext.Provider value={{ currencies: exchangeRates }}>
+    <>
+      <h3 className="page-title">{t("currency_converter.i_want_convert")}</h3>
+
       <form onSubmit={handleSubmit} className="flex flex-wrap lg:flex-nowrap">
         <Grid container spacing={3}>
           <Grid item xs={12} md={3} lg={2}>
             <TextField
               fullWidth
+              autoFocus
               label={t("currency_converter.amount")}
               type="number"
               min="0"
               minLength="1"
               required
-              value={formValues.amount}
+              value={formValues.amount ? formValues.amount : ""}
               onChange={handleChange}
               name="amount"
             />
@@ -67,7 +68,6 @@ export default function CurrencyConverterForm() {
 
           <Grid item xs={5} md lg className="md:pr-0">
             <CurrenciesList
-              loading={exchangesLoading}
               inputLabel={t("currency_converter.from")}
               onChange={handleChange}
               name="from"
@@ -96,7 +96,6 @@ export default function CurrencyConverterForm() {
 
           <Grid item xs={5} md lg className="md:pl-0">
             <CurrenciesList
-              loading={exchangesLoading}
               inputLabel={t("currency_converter.to")}
               name="to"
               onChange={handleChange}
@@ -118,14 +117,15 @@ export default function CurrencyConverterForm() {
         </div>
       </form>
 
-      <div>
-        <ExchangeRateResult
-          amount={formValues.amount}
-          from={formValues.from}
-          to={formValues.to}
-          doConvert={doConvert}
-        />
-      </div>
-    </CurrencyFormContext.Provider>
+      {exchangeRateValues?.amount && (
+        <div>
+          <ExchangeRateResult
+            amount={exchangeRateValues.amount}
+            from={exchangeRateValues.from}
+            to={exchangeRateValues.to}
+          />
+        </div>
+      )}
+    </>
   );
 }

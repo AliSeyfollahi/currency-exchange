@@ -3,38 +3,66 @@ import config from "../../config";
 import { calculateExchangeRate } from "../../utils/exchangeRate";
 
 export default function ExchangeRateResult(props) {
-  const [convertedAmount, setConvertedAmouont] = useState();
+  const [converted, setConverted] = useState();
 
   useEffect(() => {
-    if (props.doConvert && props.amount && props.from?.rate && props.to?.rate) {
-      setConvertedAmouont(
-        calculateExchangeRate(
-          props.amount,
-          props.from.rate,
-          props.to.rate
-        ).toLocaleString("en", {
-          maximumFractionDigits: config.CONVERTED_AMOUNT_FRACTION_DIGITS,
-        })
+    if (props.amount && props.from?.rate && props.to?.rate) {
+      setConverted(
+        calculateExchangeRate(props.amount, props.from.rate, props.to.rate)
       );
     } else {
-      setConvertedAmouont(null);
+      setConverted(null);
     }
   }, [props]);
 
   return (
     <>
-      {convertedAmount && (
-        <div className="py-12 text-center text-5xl">
-          <span className="font-light">
-            <span className="px-2">{props.amount}</span>
-            <span className="px-2">{props.from?.currency}</span>
-            <span className="px-2">=</span>
-          </span>
-          <span className="font-semibold accent">
-            <span className="px-2">{convertedAmount}</span>
-            <span className="px-2">{props.to?.currency}</span>
-          </span>
-        </div>
+      {converted && (
+        <>
+          <div className="pt-12 pb-8 text-center text-5xl">
+            <span className="font-light">
+              <span className="px-2">{props.amount}</span>
+              <span className="px-2">{props.from?.currency}</span>
+              <span className="px-2">=</span>
+            </span>
+            <span className="font-semibold accent">
+              <span className="px-2">
+                {converted.amount.toLocaleString("en", {
+                  maximumFractionDigits:
+                    config.CONVERTED_AMOUNT_FRACTION_DIGITS,
+                })}
+              </span>
+              <span className="px-2">{props.to?.currency}</span>
+            </span>
+          </div>
+
+          <div className="text-center">
+            <div className="flex justify-center">
+              <div>
+                <p>1 {props.from?.currency} = </p>
+                <p>1 {props.to?.currency} = </p>
+              </div>
+
+              <div className="mx-1">
+                <p>
+                  {converted.fromOne.toLocaleString("en", {
+                    maximumFractionDigits: config.CONVERTED_AMOUNT_ONE_FRACTION_DIGITS,
+                  })}{" "}
+                </p>
+                <p>
+                  {converted.toOne.toLocaleString("en", {
+                    maximumFractionDigits: config.CONVERTED_AMOUNT_ONE_FRACTION_DIGITS,
+                  })}{" "}
+                </p>
+              </div>
+
+              <div>
+                <p>{props.to?.currency}</p>
+                <p>{props.from?.currency}</p>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </>
   );

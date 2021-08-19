@@ -1,7 +1,11 @@
 {
   "main": {
     "title_p1": "currency",
-    "title_p2": "exchange"
+    "title_p2": "exchange",
+    "days": "days",
+    "table": "table",
+    "date": "date",
+    "chart": "chart"
   },
   "home": {
     "currency_converter": "currency converter",
@@ -13,5 +17,11 @@
     "to": "to",
     "convert": "convert",
     "amount": "amount"
+  },
+  "exchange_history":{
+    "exchange_history": "exchange history",
+    "exchange_rate": "exchange rate",
+    "exchange_history_report_types": "Exchange History Report Types",
+    "duration": "duration"
   }
 }

@@ -1,15 +1,11 @@
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { useContext, useEffect, useState } from "react";
-import { CurrencyFormContext } from "./CurrencyConverterForm";
+import { useContext, useState } from "react";
+import { CurrencyFormContext } from "../../context/CurrencyFormContext";
 
 export default function CurrenciesList(props) {
   const { currencies } = useContext(CurrencyFormContext);
   const [searchValue, setSearchValue] = useState("");
-
-  useEffect(() => {
-    console.log(props.value)    
-  }, [props.value]);
 
   const handleSearch = (e) => {
     setSearchValue(e.target.value);
@@ -30,7 +26,7 @@ export default function CurrenciesList(props) {
     <>
       <Autocomplete
         value={props.value ? props.value : null}
-        loading={props.loading}
+        loading={!currencies}
         options={currencies
           .filter((item) =>
             searchValue

@@ -3,5 +3,11 @@ export function calculateExchangeRate(amount, fromRate, toRate) {
   fromRate = parseFloat(fromRate);
   toRate = parseFloat(toRate);
 
-  return amount ? amount * fromRate / toRate : null;
+  return amount
+    ? {
+        amount: (amount * fromRate) / toRate,
+        fromOne: fromRate / toRate,
+        toOne: toRate / fromRate,
+      }
+    : null;
 }
