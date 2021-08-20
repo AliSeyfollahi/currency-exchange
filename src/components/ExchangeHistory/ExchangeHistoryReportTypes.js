@@ -1,24 +1,18 @@
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import config from "../../config";
-import { CurrencyFormContext } from "../../context/CurrencyFormContext";
 
-export default function ExchangeHistoryReportTypes() {
+export default function ExchangeHistoryReportTypes(props) {
   const { t } = useTranslation();
-  const name = "exchangeHistoryReportType"
-  const { exchangeRateValues, setExchangeRateValues } = useContext(CurrencyFormContext);
-  const handleChange = (e, item) => {
-    setExchangeRateValues({...exchangeRateValues, ...{[name]: item}})
-  };
+  const name = "exchangeHistoryReportType";
 
   return (
     <RadioGroup
       row
       aria-label={t("exchange_history.exchange_history_report_types")}
       name={name}
-      onChange={handleChange}
-      defaultValue={config.EXCHANGE_HISTORY_REPORT_TYPE_DEFAULT}
+      onChange={props.onChange}
+      defaultValue={props.defaultValue}
     >
       <FormControlLabel
         value="table"

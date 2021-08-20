@@ -1,11 +1,58 @@
-import { createContext } from "react";
-import config from "../config";
+import { createContext, useContext, useReducer } from "react";
 
-export const defaultCurrencyFormContext = {
+export const defaultExchangeRateFormContext = {
   amount: null,
   from: null,
   to: null,
-  exchangeHistoryReportType: config.EXCHANGE_HISTORY_REPORT_TYPE_DEFAULT,
-  exchangeHistoryReportDuration: config.EXCHANGE_HISTORY_DURATIONS_DEFAULT,
 };
-export const CurrencyFormContext = createContext(defaultCurrencyFormContext);
+export const ExchangeRateFormContext = createContext();
+
+// Actions
+export const CONVERT = "CONVERT";
+export const SWITCH_RATES = "SWITCH_RATES";
+export const CLEAR_ALL = "CLEAR_ALL";
+
+// Action creators
+export function convert(value) {
+  return { type: CONVERT, params: value };
+}
+export function switchRates() {
+  return { type: SWITCH_RATES };
+}
+
+export function clearAll() {
+  return { type: CLEAR_ALL };
+}
+
+// Reducer
+export function ExchangeRateFormReducer(state, action) {
+  switch (action.type) {
+    case CONVERT:
+      return action.params;
+    case CLEAR_ALL:
+      return { amount: null, from: null, to: null };
+    default:
+      return state;
+  }
+}
+
+export function ExchangeRateFormProvider(props) {
+  const [items, dispatch] = useReducer(
+    ExchangeRateFormReducer,
+    defaultExchangeRateFormContext
+  );
+
+  return (
+    <ExchangeRateFormContext.Provider
+      value={{
+        exchangeRateFormValues: items,
+        exchangeRateFormDispatch: dispatch,
+      }}
+      {...props}
+    />
+  );
+}
+
+export function useExchangeRateFormContext() {
+  return useContext(ExchangeRateFormContext);
+}

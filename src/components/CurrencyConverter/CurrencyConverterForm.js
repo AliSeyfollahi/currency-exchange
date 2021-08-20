@@ -1,34 +1,40 @@
 import { Button, Grid, TextField } from "@material-ui/core";
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CurrenciesList from "./CurrenciesList";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import ExchangeRateResult from "./ExchangeRateResult";
-import { CurrencyFormContext } from "../../context/CurrencyFormContext";
+import { clearAll, convert, useExchangeRateFormContext } from "../../context/CurrencyFormContext";
+import { getExchangeRates } from "../../api/nomics";
+import {
+  setExchangeRates,
+  useExchangeRatesContext,
+} from "../../context/ExchangeRatesContext";
 
 export default function CurrencyConverterForm() {
   const { t } = useTranslation();
   const [formValues, setFormValues] = useState({});
+  const { exchangeDispatch } = useExchangeRatesContext();
 
-  const { exchangeRateValues, setExchangeRateValues } =
-    useContext(CurrencyFormContext);
+  const { exchangeRateFormValues, exchangeRateFormDispatch } =
+    useExchangeRateFormContext();
+
+  useEffect(() => {
+    getExchangeRates().then((data) => {
+      exchangeDispatch(setExchangeRates(data));
+    });
+  }, []);
 
   const handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     setFormValues({ ...formValues, ...{ [name]: value } });
-    setExchangeRateValues({
-      ...exchangeRateValues,
-      ...{ amount: null, from: null, to: null },
-    });
+    exchangeRateFormDispatch(clearAll());
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setExchangeRateValues({
-      ...exchangeRateValues,
-      ...formValues,
-    });
+    exchangeRateFormDispatch(convert(formValues));
   };
 
   const handleSwitch = (e) => {
@@ -37,12 +43,8 @@ export default function CurrencyConverterForm() {
       ...formValues,
       ...{ to: formValues.from, from: formValues.to },
     };
-
+    exchangeRateFormDispatch(clearAll());
     setFormValues(values);
-    setExchangeRateValues({
-      ...exchangeRateValues,
-      ...values,
-    });
   };
 
   return (
@@ -117,12 +119,12 @@ export default function CurrencyConverterForm() {
         </div>
       </form>
 
-      {exchangeRateValues?.amount && (
+      {exchangeRateFormValues?.amount && (
         <div>
           <ExchangeRateResult
-            amount={exchangeRateValues.amount}
-            from={exchangeRateValues.from}
-            to={exchangeRateValues.to}
+            amount={exchangeRateFormValues.amount}
+            from={exchangeRateFormValues.from}
+            to={exchangeRateFormValues.to}
           />
         </div>
       )}

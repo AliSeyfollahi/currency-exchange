@@ -1,11 +1,10 @@
-
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getExchangeRatesHistory } from "../../api/nomics";
-import { CurrencyFormContext } from "../../context/CurrencyFormContext";
+import { useExchangeRateFormContext } from "../../context/CurrencyFormContext";
 import ExchangeHistoryTableReport from "./ExchangeHistoryTableReport";
 
-export default function ExchangeHistoryReport() {
-  const { exchangeRateValues } = useContext(CurrencyFormContext);
+export default function ExchangeHistoryReport(props) {
+  const { exchangeRateFormValues } = useExchangeRateFormContext();
   const [rows, setRows] = useState();
   const [rowsLoading, setRowsLoading] = useState(false);
 
@@ -13,18 +12,18 @@ export default function ExchangeHistoryReport() {
     setRows(null);
     setRowsLoading(true);
     getExchangeRatesHistory({
-      duration: exchangeRateValues.exchangeHistoryReportDuration,
-      currency: exchangeRateValues.from.currency,
+      duration: props.duration,
+      currency: exchangeRateFormValues.from.currency,
     }).then((data) => {
       setRowsLoading(false);
       setRows(data);
     });
-  }, [exchangeRateValues]);
+  }, [props.duration]);
 
   return (
     <>
-      {exchangeRateValues.exchangeHistoryReportType === "table" && (
-        <ExchangeHistoryTableReport rows={rows} loading={rowsLoading}/>
+      {props.reportType === "table" && (
+        <ExchangeHistoryTableReport rows={rows} loading={rowsLoading} />
       )}
     </>
   );
