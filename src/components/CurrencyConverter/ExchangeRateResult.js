@@ -38,12 +38,12 @@ export default function ExchangeRateResult(props) {
 
           <div className="text-center">
             <div className="flex justify-center">
-              <div>
+              <div className="text-right">
                 <p>1 {props.from?.currency} = </p>
                 <p>1 {props.to?.currency} = </p>
               </div>
 
-              <div className="mx-1">
+              <div className="mx-1 text-left">
                 <p>
                   {converted.fromOne.toLocaleString("en", {
                     maximumFractionDigits: config.CONVERTED_AMOUNT_ONE_FRACTION_DIGITS,
@@ -56,7 +56,7 @@ export default function ExchangeRateResult(props) {
                 </p>
               </div>
 
-              <div>
+              <div className="text-left">
                 <p>{props.to?.currency}</p>
                 <p>{props.from?.currency}</p>
               </div>

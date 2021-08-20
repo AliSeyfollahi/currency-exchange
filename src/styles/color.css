@@ -1,3 +1,8 @@
 :root {
   --accent-color: #94c720;
+  --table-header-text: #8d8d8d;
+}
+
+.accent {
+  color: var(--accent-color);
 }

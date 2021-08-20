@@ -30,7 +30,7 @@ export default function ExchangeHistoryReportTypes() {
         value="chart"
         control={<Radio color="primary" />}
         label={t("main.chart")}
-        className="capitalize"
+        className="capitalize mr-0"
       />
     </RadioGroup>
   );

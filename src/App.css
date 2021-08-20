@@ -3,26 +3,12 @@ html {
   font-size: 16px;
 }
 
-.page-title {
-  font-size: 3rem;
-  font-weight: 500;
-  margin: .75rem 0 2.5rem;
-}
-
-.section-title {
-  font-size: 2rem;
-  font-weight: 500;
-  margin: .5rem 0 1.5rem;
-}
-
-.page-title::first-letter, .section-title::first-letter {
-  text-transform: capitalize;
-}
-
-.accent{
-  color: var(--accent-color);
+.min-h-20 {
+  min-height: 5rem;
 }
 
 @import url("./styles/tab.css");
 @import url("./styles/form.css");
 @import url("./styles/color.css");
+@import url("./styles/headings.css");
+@import url("./styles/table.css");

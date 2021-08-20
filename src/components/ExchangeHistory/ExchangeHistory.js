@@ -18,7 +18,7 @@ export default function ExchangeHistory() {
         {t("exchange_history.exchange_history")}
       </h4>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className="mb-2">
         <Grid item xs={12} lg={6}>
           <div className="flex justify-between">
             <div className="w-4/12 flex justify-between align-middle">
@@ -28,10 +28,11 @@ export default function ExchangeHistory() {
             <ExchangeHistoryReportTypes/>
           </div>
 
-          <ExchangeHistoryReport className="my-4"/>
         </Grid>
-        <Grid item xs={12} lg={6}></Grid>
       </Grid>
+
+      <ExchangeHistoryReport/>
+
     </>
   );
 }

@@ -1,0 +1,3 @@
+.MuiTableRow-head > .MuiTableCell-head {
+  color: var(--table-header-text);
+}

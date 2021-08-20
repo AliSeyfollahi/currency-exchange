@@ -22,6 +22,10 @@
     "exchange_history": "exchange history",
     "exchange_rate": "exchange rate",
     "exchange_history_report_types": "Exchange History Report Types",
+    "lowest": "lowest",
+    "highest": "highest",
+    "average": "average",
+    "statistics": "statistics",
     "duration": "duration"
   }
 }
