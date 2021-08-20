@@ -1,8 +1,8 @@
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { useContext, useState } from "react";
-import { CurrencyFormContext } from "../../context/CurrencyFormContext";
-import { useExchangeRatesContext } from "../../context/ExchangeRatesContext";
+import { CurrencyFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
+import { useExchangeRatesContext } from "../../context/ExchangeRatesContext/ExchangeRatesContext";
 
 export default function CurrenciesList(props) {
   const { exchangeRates } = useExchangeRatesContext();

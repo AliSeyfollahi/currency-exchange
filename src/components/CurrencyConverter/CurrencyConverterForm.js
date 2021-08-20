@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next";
 import CurrenciesList from "./CurrenciesList";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import ExchangeRateResult from "./ExchangeRateResult";
-import { clearAll, convert, useExchangeRateFormContext } from "../../context/CurrencyFormContext";
+import { clearAll, convert, useExchangeRateFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
 import { getExchangeRates } from "../../api/nomics";
 import {
   setExchangeRates,
   useExchangeRatesContext,
-} from "../../context/ExchangeRatesContext";
+} from "../../context/ExchangeRatesContext/ExchangeRatesContext";
 
 export default function CurrencyConverterForm() {
   const { t } = useTranslation();

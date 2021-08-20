@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getExchangeRatesHistory } from "../../api/nomics";
-import { useExchangeRateFormContext } from "../../context/CurrencyFormContext";
+import { useExchangeRateFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
 import ExchangeHistoryTableReport from "./ExchangeHistoryTableReport";
 
 export default function ExchangeHistoryReport(props) {

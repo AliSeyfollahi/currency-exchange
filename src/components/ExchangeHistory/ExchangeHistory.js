@@ -2,7 +2,7 @@ import { Divider, Grid } from "@material-ui/core";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import config from "../../config";
-import { useExchangeRateFormContext } from "../../context/CurrencyFormContext";
+import { useExchangeRateFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
 import ExchangeHistoryDuration from "./ExchangeHistoryDuration";
 import ExchangeHistoryReport from "./ExchangeHistoryReport";
 import ExchangeHistoryReportTypes from "./ExchangeHistoryReportTypes";
