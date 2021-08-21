@@ -24,16 +24,16 @@ export default function ExchangeRateResult(props) {
             container
             className="pt-12 pb-8 text-center text-5xl"
           >
-            <Grid item className="font-light md:text-right" item xs={12} md>
+            <Grid item className="font-light md:text-right" xs={12} md>
               <span className="px-3">{props.amount}</span>
               <span>{props.from?.currency}</span>
             </Grid>
 
-            <Grid item className="font-light w-auto" item xs={12} md={1}>
+            <Grid item className="font-light w-auto" xs={12} md={1}>
               =
             </Grid>
 
-            <Grid item className="font-semibold accent md:text-left" item xs={12} md>
+            <Grid item className="font-semibold accent md:text-left" xs={12} md>
               <span className="pr-2">
                 {converted.amount.toLocaleString("en", {
                   maximumFractionDigits:

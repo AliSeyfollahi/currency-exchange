@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getExchangeRatesHistory } from "../../api/nomics";
 import { useExchangeRateFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
+import ExchangeHistoryChartReport from "./ExchangeHistoryChartReport";
 import ExchangeHistoryTableReport from "./ExchangeHistoryTableReport";
 
 export default function ExchangeHistoryReport(props) {
@@ -24,6 +25,9 @@ export default function ExchangeHistoryReport(props) {
     <>
       {props.reportType === "table" && (
         <ExchangeHistoryTableReport rows={rows} loading={rowsLoading} />
+      )}
+      {props.reportType === "chart" && (
+        <ExchangeHistoryChartReport rows={rows} loading={rowsLoading} />
       )}
     </>
   );

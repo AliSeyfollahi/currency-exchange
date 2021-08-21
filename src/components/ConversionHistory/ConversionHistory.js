@@ -2,7 +2,6 @@ import {
   Button,
   makeStyles,
   Paper,
-  styled,
   Table,
   TableBody,
   TableCell,
