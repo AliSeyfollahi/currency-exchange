@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
+import ConversionHistoryStorage from "./storage";
 
 export const defaultExchangeRateFormContext = {
   amount: null,
@@ -10,7 +11,7 @@ export const ExchangeRateFormContext = createContext();
 // Actions
 export const CONVERT = "CONVERT";
 export const SWITCH_RATES = "SWITCH_RATES";
-export const CLEAR_ALL = "CLEAR_ALL";
+export const RESET = "RESET";
 
 // Action creators
 export function convert(value) {
@@ -20,16 +21,17 @@ export function switchRates() {
   return { type: SWITCH_RATES };
 }
 
-export function clearAll() {
-  return { type: CLEAR_ALL };
+export function reset() {
+  return { type: RESET };
 }
 
 // Reducer
 export function ExchangeRateFormReducer(state, action) {
   switch (action.type) {
     case CONVERT:
+      (new ConversionHistoryStorage).create(action.params);
       return action.params;
-    case CLEAR_ALL:
+    case RESET:
       return { amount: null, from: null, to: null };
     default:
       return state;

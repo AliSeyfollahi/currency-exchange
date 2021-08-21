@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { FindReplace } from "@material-ui/icons";
 
 import CurrencyConverter from "../../components/CurrencyConverter/CurrencyConverter";
+import ConversionHistory from "../../components/ConversionHistory/ConversionHistory";
 
 import "./Home.css";
 
@@ -54,6 +55,9 @@ export default function Home() {
         <Container>
           <div hidden={value !== 1}>
             <CurrencyConverter />
+          </div>
+          <div hidden={value !== 2}>
+            <ConversionHistory />
           </div>
         </Container>
       </div>

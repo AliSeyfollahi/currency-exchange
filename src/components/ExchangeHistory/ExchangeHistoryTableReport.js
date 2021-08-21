@@ -58,7 +58,7 @@ export default function ExchangeHistoryTableReport(props) {
                 <TableBody>
                   {props.rows &&
                     props.rows.map((row) => (
-                      <TableRow key={row.timestamp} hover>
+                      <TableRow key={row.timestamp}>
                         <TableCell className="w-2/5" component="td" scope="row">
                           {new Date(row.timestamp).toLocaleDateString("en")}
                         </TableCell>
@@ -102,7 +102,7 @@ export default function ExchangeHistoryTableReport(props) {
             <TableBody>
               {statistics && (
                 <>
-                  <TableRow hover>
+                  <TableRow>
                     <TableCell
                       className="w-2/5 capitalize"
                       component="td"
@@ -117,7 +117,7 @@ export default function ExchangeHistoryTableReport(props) {
                     </TableCell>
                   </TableRow>
 
-                  <TableRow hover>
+                  <TableRow>
                     <TableCell
                       className="w-2/5 capitalize"
                       component="td"
@@ -132,7 +132,7 @@ export default function ExchangeHistoryTableReport(props) {
                     </TableCell>
                   </TableRow>
 
-                  <TableRow hover>
+                  <TableRow>
                     <TableCell
                       className="w-2/5 capitalize"
                       component="td"

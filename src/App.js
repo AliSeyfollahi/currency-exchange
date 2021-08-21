@@ -3,13 +3,9 @@ import Home from "./pages/Home/Home";
 
 import "./locale/index.js";
 
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import { green, teal } from "@material-ui/core/colors";
-const theme = createTheme({
-  palette: {
-    primary: teal
-  }
-});
+import {  ThemeProvider } from "@material-ui/core/styles";
+import { theme } from "./utils/theme";
+
 
 function App() {
   return (

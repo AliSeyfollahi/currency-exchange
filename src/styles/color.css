@@ -1,4 +1,5 @@
 :root {
+  --default-text-color: #404040;
   --accent-color: #94c720;
   --table-header-text: #8d8d8d;
 }

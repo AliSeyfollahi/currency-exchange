@@ -5,6 +5,7 @@
     "days": "days",
     "table": "table",
     "date": "date",
+    "view": "view",
     "chart": "chart"
   },
   "home": {
@@ -18,7 +19,7 @@
     "convert": "convert",
     "amount": "amount"
   },
-  "exchange_history":{
+  "exchange_history": {
     "exchange_history": "exchange history",
     "exchange_rate": "exchange rate",
     "exchange_history_report_types": "Exchange History Report Types",
@@ -27,5 +28,12 @@
     "average": "average",
     "statistics": "statistics",
     "duration": "duration"
+  },
+  "conversion_history": {
+    "conversion_history":"conversion history",
+    "event":"event",
+    "event_str":"Converted an amount of {amount} from {from} to {to}",
+    "actions":"actions",
+    "delete_from_history":"delete from history"
   }
 }

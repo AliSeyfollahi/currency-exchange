@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import CurrenciesList from "./CurrenciesList";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import ExchangeRateResult from "./ExchangeRateResult";
-import { clearAll, convert, useExchangeRateFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
+import { reset, convert, useExchangeRateFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
 import { getExchangeRates } from "../../api/nomics";
 import {
   setExchangeRates,
@@ -29,7 +29,7 @@ export default function CurrencyConverterForm() {
     const value = e.target.value;
     const name = e.target.name;
     setFormValues({ ...formValues, ...{ [name]: value } });
-    exchangeRateFormDispatch(clearAll());
+    exchangeRateFormDispatch(reset());
   };
 
   const handleSubmit = (e) => {
@@ -43,13 +43,12 @@ export default function CurrencyConverterForm() {
       ...formValues,
       ...{ to: formValues.from, from: formValues.to },
     };
-    exchangeRateFormDispatch(clearAll());
+    exchangeRateFormDispatch(reset());
     setFormValues(values);
   };
 
   return (
     <>
-      <h3 className="page-title">{t("currency_converter.i_want_convert")}</h3>
 
       <form onSubmit={handleSubmit} className="flex flex-wrap lg:flex-nowrap">
         <Grid container spacing={3}>
