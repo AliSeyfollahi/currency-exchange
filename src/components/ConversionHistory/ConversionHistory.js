@@ -24,16 +24,18 @@ export default function ConversionHistory() {
   const [conversions, setConversions] = useState();
   const [conversionsLoading, setConversionsLoading] = useState(false);
 
-  const useStyles = makeStyles({
-    actionButton: {
-      visibility: "hidden",
+  const useStyles = makeStyles((theme) => ({
+    [theme.breakpoints.up("md")]: {
+      actionButton: {
+        visibility: "hidden",
+      },
     },
     actionRow: {
       "&:hover .actions > button, &:hover .actions > a": {
         visibility: "visible !important",
       },
     },
-  });
+  }));
   const classes = useStyles();
 
   const getAllConversions = () => {
@@ -103,11 +105,17 @@ export default function ConversionHistory() {
                   key={conversion.date}
                   className={classes.actionRow}
                 >
-                  <TableCell className="capitalize" component="td" scope="row">
+                  <TableCell
+                    className="capitalize whitespace-nowrap"
+                    component="td"
+                    scope="row"
+                  >
                     {formatDate(conversion.date)}
                   </TableCell>
-                  <TableCell>{formatEvent(conversion)}</TableCell>
-                  <TableCell className="actions">
+                  <TableCell className="whitespace-nowrap">
+                    {formatEvent(conversion)}
+                  </TableCell>
+                  <TableCell className="actions whitespace-nowrap">
                     <Link
                       to={`/CurrencyConverter/${conversion.amount}/${conversion.from}/${conversion.to}`}
                       component={Button}
@@ -147,7 +155,9 @@ export default function ConversionHistory() {
         </TableContainer>
       )}
 
-      {!conversions?.length && <Alert severity="warning">{t("main.no_items_found")}!</Alert>}
+      {!conversions?.length && !conversionsLoading && (
+        <Alert severity="warning">{t("main.no_items_found")}!</Alert>
+      )}
     </>
   );
 }

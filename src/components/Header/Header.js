@@ -1,4 +1,4 @@
-import { Container, Tab, Tabs } from "@material-ui/core";
+import { Container, Tab, Tabs, useMediaQuery } from "@material-ui/core";
 import { FindReplace } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,7 @@ export default function Header() {
   const { t } = useTranslation();
   const [value, setValue] = useState(1);
   const location = useLocation();
+  const mediumViewport = useMediaQuery("(min-width:768px)");
 
   useEffect(() => {
     let value = [null, "", "ConversionHistory"].indexOf(
@@ -24,6 +25,8 @@ export default function Header() {
           value={value}
           indicatorColor="primary"
           textColor="primary"
+          orientation={mediumViewport ? "horizontal" : "vertical"}
+          style={{ width: "100%" }}
         >
           <Tab
             label={
@@ -39,15 +42,17 @@ export default function Header() {
                 </h1>
               </label>
             }
-            className="pointer-events-none pl-0 mr-3"
+            className="pointer-events-none pl-0 mr-3 max-w-full w-full md:w-auto"
           />
           <Link
             to="/"
+            className="max-w-full"
             component={Tab}
             label={<h2>{t("home.currency_converter")}</h2>}
           />
           <Link
             to="/ConversionHistory"
+            className="max-w-full"
             component={Tab}
             label={<h2>{t("home.view_conversion_history")}</h2>}
           />
