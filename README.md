@@ -3,6 +3,12 @@ This is a currency conversion application to help calculate what the amount is w
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## API
+To achieve that, you will consume Nomics’ API http://docs.nomics.com. You can get a free API Key.
+
+## Config
+Please check [config.js](https://github.com/AliSeyfollahi/currency-exchange/blob/main/src/config.js) file to change API Key adnd other configurations.
+
 ## Available Scripts
 
 In the project directory, you can run:
