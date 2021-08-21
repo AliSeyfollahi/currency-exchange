@@ -13,7 +13,7 @@ export default function ExchangeHistoryReport(props) {
     setRowsLoading(true);
     getExchangeRatesHistory({
       duration: props.duration,
-      currency: exchangeRateFormValues.from.currency,
+      currency: exchangeRateFormValues.from,
     }).then((data) => {
       setRowsLoading(false);
       setRows(data);

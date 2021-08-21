@@ -1,11 +1,19 @@
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { useContext, useState } from "react";
-import { CurrencyFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
+import { useEffect, useState } from "react";
 import { useExchangeRatesContext } from "../../context/ExchangeRatesContext/ExchangeRatesContext";
 
 export default function CurrenciesList(props) {
   const { exchangeRates } = useExchangeRatesContext();
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    let currencies = [];
+    for (const [key, value] of Object.entries(exchangeRates)) {
+      currencies.push(value.currency);
+    }
+    setCurrencies(currencies);
+  }, [exchangeRates]);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -29,17 +37,15 @@ export default function CurrenciesList(props) {
       <Autocomplete
         value={props.value ? props.value : null}
         loading={!exchangeRates}
-        options={exchangeRates
+        options={currencies
           .filter((item) =>
             searchValue
-              ? item.currency
-                  .toLowerCase()
-                  .indexOf(searchValue.toLowerCase()) === 0
+              ? item.toLowerCase().indexOf(searchValue.toLowerCase()) === 0
               : true
           )
           .filter((item, i) => i < 10)}
         autoHighlight
-        getOptionLabel={(option) => (option.currency ? option.currency : "")}
+        getOptionLabel={(option) => (option ? option : "")}
         fullWidth
         onChange={handleChange}
         renderOption={(option) => (
@@ -51,7 +57,7 @@ export default function CurrenciesList(props) {
             >
               {option.name[0]}
             </Avatar> */}
-            <span className="text-sm">{option.currency}</span>
+            <span className="text-sm">{option}</span>
           </>
         )}
         renderInput={(params) => (

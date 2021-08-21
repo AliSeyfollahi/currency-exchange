@@ -4,17 +4,21 @@ import { useTranslation } from "react-i18next";
 import CurrenciesList from "./CurrenciesList";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import ExchangeRateResult from "./ExchangeRateResult";
-import { reset, convert, useExchangeRateFormContext } from "../../context/CurrencyFormContext/CurrencyFormContext";
+import {
+  reset,
+  convert,
+  useExchangeRateFormContext,
+} from "../../context/CurrencyFormContext/CurrencyFormContext";
 import { getExchangeRates } from "../../api/nomics";
 import {
   setExchangeRates,
   useExchangeRatesContext,
 } from "../../context/ExchangeRatesContext/ExchangeRatesContext";
 
-export default function CurrencyConverterForm() {
+export default function CurrencyConverterForm(props) {
   const { t } = useTranslation();
   const [formValues, setFormValues] = useState({});
-  const { exchangeDispatch } = useExchangeRatesContext();
+  const { exchangeRates, exchangeDispatch } = useExchangeRatesContext();
 
   const { exchangeRateFormValues, exchangeRateFormDispatch } =
     useExchangeRateFormContext();
@@ -25,6 +29,21 @@ export default function CurrencyConverterForm() {
     });
   }, []);
 
+  useEffect(() => {
+    if (props?.formValues.from && exchangeRates && Object.keys(exchangeRates).length > 0) {
+      setFormValues(props.formValues);
+      exchangeRateFormDispatch(
+        convert({
+          ...props.formValues,
+          ...{
+            fromRate: exchangeRates[props.formValues.from].rate,
+            toRate: exchangeRates[props.formValues.to].rate,
+          },
+        }, true)
+      );
+    }
+  }, [props.formValues, exchangeRates]);
+
   const handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
@@ -34,7 +53,15 @@ export default function CurrencyConverterForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    exchangeRateFormDispatch(convert(formValues));
+    exchangeRateFormDispatch(
+      convert({
+        ...formValues,
+        ...{
+          fromRate: exchangeRates[formValues.from].rate,
+          toRate: exchangeRates[formValues.to].rate,
+        },
+      })
+    );
   };
 
   const handleSwitch = (e) => {
@@ -49,7 +76,6 @@ export default function CurrencyConverterForm() {
 
   return (
     <>
-
       <form onSubmit={handleSubmit} className="flex flex-wrap lg:flex-nowrap">
         <Grid container spacing={3}>
           <Grid item xs={12} md={3} lg={2}>
@@ -122,8 +148,14 @@ export default function CurrencyConverterForm() {
         <div>
           <ExchangeRateResult
             amount={exchangeRateFormValues.amount}
-            from={exchangeRateFormValues.from}
-            to={exchangeRateFormValues.to}
+            from={{
+              currency: exchangeRateFormValues.from,
+              rate: exchangeRateFormValues.fromRate,
+            }}
+            to={{
+              currency: exchangeRateFormValues.to,
+              rate: exchangeRateFormValues.toRate,
+            }}
           />
         </div>
       )}

@@ -6,7 +6,8 @@
     "table": "table",
     "date": "date",
     "view": "view",
-    "chart": "chart"
+    "chart": "chart",
+    "no_items_found": "No items found"
   },
   "home": {
     "currency_converter": "currency converter",

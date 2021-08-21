@@ -3,9 +3,12 @@ import CurrencyConverterForm from "./CurrencyConverterForm";
 import { ExchangeRatesProvider } from "../../context/ExchangeRatesContext/ExchangeRatesContext";
 import { ExchangeRateFormProvider } from "../../context/CurrencyFormContext/CurrencyFormContext";
 import { useTranslation } from "react-i18next";
+import { useRouteMatch } from "react-router-dom";
 
 export default function CurrencyConverter() {
   const { t } = useTranslation();
+
+  let match = useRouteMatch();
 
   return (
     <>
@@ -13,7 +16,7 @@ export default function CurrencyConverter() {
 
       <ExchangeRateFormProvider>
         <ExchangeRatesProvider>
-          <CurrencyConverterForm />
+          <CurrencyConverterForm formValues={match.params} />
         </ExchangeRatesProvider>
 
         <ExchangeHistory />

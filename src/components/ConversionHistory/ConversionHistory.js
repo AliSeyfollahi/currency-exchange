@@ -1,6 +1,8 @@
 import {
   Button,
+  makeStyles,
   Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -8,16 +10,31 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
+
 import { DeleteForever, Visibility } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ConversionHistoryStorage from "../../context/CurrencyFormContext/storage";
 import Loading from "../common/Loading/Loading";
+import { Alert } from "@material-ui/lab";
 
 export default function ConversionHistory() {
   const { t } = useTranslation();
   const [conversions, setConversions] = useState();
   const [conversionsLoading, setConversionsLoading] = useState(false);
+
+  const useStyles = makeStyles({
+    actionButton: {
+      visibility: "hidden",
+    },
+    actionRow: {
+      "&:hover .actions > button, &:hover .actions > a": {
+        visibility: "visible !important",
+      },
+    },
+  });
+  const classes = useStyles();
 
   const getAllConversions = () => {
     setConversionsLoading(true);
@@ -25,10 +42,6 @@ export default function ConversionHistory() {
       setConversionsLoading(false);
       setConversions(data);
     });
-  };
-
-  const viewConversion = (e) => {
-    const record = JSON.parse(e.target.dataset.record);
   };
 
   const deleteConversion = (e) => {
@@ -54,8 +67,8 @@ export default function ConversionHistory() {
     const str = t("conversion_history.event_str");
     return str
       .replace("{amount}", conversion.amount)
-      .replace("{from}", conversion.from.currency)
-      .replace("{to}", conversion.to.currency);
+      .replace("{from}", conversion.from)
+      .replace("{to}", conversion.to);
   };
 
   return (
@@ -64,45 +77,54 @@ export default function ConversionHistory() {
         {t("conversion_history.conversion_history")}
       </h3>
 
-      <TableContainer component={Paper}>
-        <Table aria-label={t("exchange_history.exchange_history")} stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell className="capitalize">{t("main.date")}</TableCell>
-              <TableCell className="capitalize w-3/6">
-                {t("conversion_history.event")}
-              </TableCell>
-              <TableCell className="capitalize">
-                {t("conversion_history.actions")}
-              </TableCell>
-            </TableRow>
-          </TableHead>
+      {conversions?.length > 0 && (
+        <TableContainer component={Paper}>
+          <Table
+            aria-label={t("exchange_history.exchange_history")}
+            stickyHeader
+            size="small"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell className="capitalize">{t("main.date")}</TableCell>
+                <TableCell className="capitalize w-3/6">
+                  {t("conversion_history.event")}
+                </TableCell>
+                <TableCell className="capitalize">
+                  {t("conversion_history.actions")}
+                </TableCell>
+              </TableRow>
+            </TableHead>
 
-          <TableBody>
-            {conversions &&
-              conversions.map((conversion) => (
-                <TableRow hover key={conversion.date}>
+            <TableBody>
+              {conversions.map((conversion) => (
+                <TableRow
+                  hover
+                  key={conversion.date}
+                  className={classes.actionRow}
+                >
                   <TableCell className="capitalize" component="td" scope="row">
                     {formatDate(conversion.date)}
                   </TableCell>
                   <TableCell>{formatEvent(conversion)}</TableCell>
-                  <TableCell>
-                    <Button
+                  <TableCell className="actions">
+                    <Link
+                      to={`/CurrencyConverter/${conversion.amount}/${conversion.from}/${conversion.to}`}
+                      component={Button}
                       size="small"
                       color="primary"
-                      className="capitalize mr-4"
-                      onClick={viewConversion}
-                      data-record={JSON.stringify(conversion)}
+                      className={`capitalize mr-4 ${classes.actionButton}`}
                     >
                       <Visibility fontSize="small" className="mr-1" />
                       {t("main.view")}
-                    </Button>
+                    </Link>
 
                     <Button
                       size="small"
                       color="secondary"
                       onClick={deleteConversion}
                       data-record={JSON.stringify(conversion)}
+                      className={classes.actionButton}
                     >
                       <DeleteForever fontSize="small" className="mr-1" />
                       <span className="capitalize-first-letter">
@@ -113,16 +135,19 @@ export default function ConversionHistory() {
                 </TableRow>
               ))}
 
-            {conversionsLoading && (
-              <TableRow>
-                <TableCell colSpan={2}>
-                  <Loading />
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+              {conversionsLoading && (
+                <TableRow>
+                  <TableCell colSpan={2}>
+                    <Loading />
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+
+      {!conversions?.length && <Alert severity="warning">{t("main.no_items_found")}!</Alert>}
     </>
   );
 }

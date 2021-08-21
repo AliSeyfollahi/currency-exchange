@@ -14,8 +14,8 @@ export const SWITCH_RATES = "SWITCH_RATES";
 export const RESET = "RESET";
 
 // Action creators
-export function convert(value) {
-  return { type: CONVERT, params: value };
+export function convert(value, view) {
+  return { type: CONVERT, params: value, view };
 }
 export function switchRates() {
   return { type: SWITCH_RATES };
@@ -29,7 +29,8 @@ export function reset() {
 export function ExchangeRateFormReducer(state, action) {
   switch (action.type) {
     case CONVERT:
-      (new ConversionHistoryStorage).create(action.params);
+      if(!action.view)
+        new ConversionHistoryStorage().create(action.params);
       return action.params;
     case RESET:
       return { amount: null, from: null, to: null };
