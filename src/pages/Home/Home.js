@@ -51,14 +51,12 @@ export default function Home() {
         </Container>
       </div>
 
-      <div className="tabl-panel bg-gray-100 p-4">
+      <div className=" bg-gray-100 p-4 pb-20">
         <Container>
           <div hidden={value !== 1}>
             <CurrencyConverter />
           </div>
-          <div hidden={value !== 2}>
-            <ConversionHistory />
-          </div>
+          {value === 2 && <ConversionHistory />}
         </Container>
       </div>
     </>

@@ -67,9 +67,16 @@ export default class ConversionHistoryStorage extends indexedDB {
   }
 
   delete(id) {
-    return this.db
-      .transaction([ConversionHistoryStorage.objectStoreName], "readwrite")
-      .objectStore(ConversionHistoryStorage.objectStoreName)
-      .delete(id);
+    return new Promise((resolve, reject) => {
+      this.open().onsuccess = async (event) => {
+        const db = event.target.result;
+        const request = db.transaction([ConversionHistoryStorage.objectStoreName], "readwrite")
+          .objectStore(ConversionHistoryStorage.objectStoreName)
+          .delete(id);
+        request.onsuccess = function (event) {
+          resolve(id);
+        };
+      };
+    });
   }
 }

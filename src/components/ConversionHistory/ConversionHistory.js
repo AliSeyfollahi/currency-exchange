@@ -32,7 +32,13 @@ export default function ConversionHistory() {
   };
 
   const deleteConversion = (e) => {
-    const record = JSON.parse(e.target.dataset.record);
+    e.preventDefault();
+    const button =
+      e.target.tagName === "BUTTON" ? e.target : e.target.closest("button");
+    const record = JSON.parse(button.dataset.record);
+    new ConversionHistoryStorage().delete(record.date).then(() => {
+      getAllConversions();
+    });
   };
 
   useEffect(() => {
@@ -75,7 +81,7 @@ export default function ConversionHistory() {
           <TableBody>
             {conversions &&
               conversions.map((conversion) => (
-                <TableRow hover>
+                <TableRow hover key={conversion.date}>
                   <TableCell className="capitalize" component="td" scope="row">
                     {formatDate(conversion.date)}
                   </TableCell>
@@ -95,12 +101,13 @@ export default function ConversionHistory() {
                     <Button
                       size="small"
                       color="secondary"
-                      className="capitalize"
-                      onClick={viewConversion}
+                      onClick={deleteConversion}
                       data-record={JSON.stringify(conversion)}
                     >
                       <DeleteForever fontSize="small" className="mr-1" />
-                      {t("conversion_history.delete_from_history")}
+                      <span className="capitalize-first-letter">
+                        {t("conversion_history.delete_from_history")}
+                      </span>
                     </Button>
                   </TableCell>
                 </TableRow>
