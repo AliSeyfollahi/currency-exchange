@@ -31,10 +31,13 @@
     "duration": "duration"
   },
   "conversion_history": {
-    "conversion_history":"conversion history",
-    "event":"event",
-    "event_str":"Converted an amount of {amount} from {from} to {to}",
-    "actions":"actions",
-    "delete_from_history":"delete from history"
+    "conversion_history": "conversion history",
+    "event": "event",
+    "event_str": "Converted an amount of {amount} from {from} to {to}",
+    "actions": "actions",
+    "delete_from_history": "delete from history"
+  },
+  "api": {
+    "general_error": "Nomic's API isn't available, please check your network connection and your API Key"
   }
 }

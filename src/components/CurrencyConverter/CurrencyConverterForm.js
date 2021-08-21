@@ -14,11 +14,13 @@ import {
   setExchangeRates,
   useExchangeRatesContext,
 } from "../../context/ExchangeRatesContext/ExchangeRatesContext";
+import Message from "../common/Message/Message";
 
 export default function CurrencyConverterForm(props) {
   const { t } = useTranslation();
   const [formValues, setFormValues] = useState({});
   const { exchangeRates, exchangeDispatch } = useExchangeRatesContext();
+  const [messageOpen, setMessageOpen] = useState(false);
 
   const { exchangeRateFormValues, exchangeRateFormDispatch } =
     useExchangeRateFormContext();
@@ -26,6 +28,8 @@ export default function CurrencyConverterForm(props) {
   useEffect(() => {
     getExchangeRates().then((data) => {
       exchangeDispatch(setExchangeRates(data));
+    }).catch(()=>{
+      setMessageOpen(true);
     });
   }, []);
 
@@ -159,6 +163,8 @@ export default function CurrencyConverterForm(props) {
           />
         </div>
       )}
+
+      <Message message={t("api.general_error")} open={messageOpen}/>
     </>
   );
 }
